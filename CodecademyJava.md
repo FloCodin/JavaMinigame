@@ -109,8 +109,273 @@ We’ve also learned rules and guidelines for how to write Java programs:
 
 
 
+## Learn Java: Manipulating Variables Review
+What’s the use of having variables if you can’t do anything with them? We’ve now seen some ways you can operate on variables and compare them. The possibilities are endless!
+
+We covered:
+
+* Addition and subtraction, using + and -
+* Multiplication and division, using * and /
+* The modulo operator for finding remainders, %
+* Compound assignment operators +=, -=, *=, /=, and %=.
+* The order of operations: parentheses -> exponents -> multiplication, division, modulo -> addition, subtraction
+* Greater than, >, and less than, <
+* Equal to, ==, and not equal to, !=
+* Greater than or equal to, >=, and less than or equal to, <=
+* equals() for comparing Strings and other objects
+* Using + to concatenate Strings
+* The final keyword which makes variables unchangeable
+Practice some of these concepts here, to make sure you have a solid foundation for learning more complicated and exciting Java concepts!
 
 
+
+### Introduction to Classes
+All programs require one or more classes that act as a model for the world.
+
+For example, a program to track student test scores might have Student, Course, and Grade classes. Our real-world concerns, students and their grades, are inside the program as classes.
+
+We represent each student as an instance, or object, of the Student class.
+
+This is object-oriented programming because programs are built around objects and their interactions. An object contains state and behavior.
+![img_2.png](img_2.png)
+
+Classes are a blueprint for objects. Blueprints detail the general structure. For example, all students have an ID, all courses can enroll a student, etc.
+
+An instance is the thing itself. This student has an ID of 42, this course enrolled that student, etc.
+
+Let’s review with another example, a savings account at a bank.
+
+What should a savings account know?
+
+* The balance of money available.
+
+What should a savings account do?
+
+* Deposit money.
+* Withdraw money.
+
+![img_3.png](img_3.png)
+Imagine two people have accounts that are instances of the SavingsAccount class. They share behavior (how they deposit and withdraw) but have individual state (their balances), and even with the same balance amount these accounts are separate entities.
+
+![img_4.png](img_4.png)
+how to create a price and set taxes on it 
+
+## Review
+Great work! Methods are a powerful way to abstract tasks away and make them repeatable. They allow us to define behavior for classes, so that the Objects we create can do the things we expect them to. Let’s review everything we have learned about methods so far.
+
+* Defining a method : Method declarations will declare a method’s return type, name, and parameters
+* Calling a method : Methods are invoked with a . and ()
+* Parameters : Inputs to the method and their types are declared in parentheses in the method signature
+* Changing Instance Fields : Methods can be used to change the value of an instance field
+* Scope : Variables only exist within the domain that they are created in
+* Return : The type of the variables that will be output are declared in the method declaration
+
+As you move through more Java material, it will be helpful to frame the tasks you create in terms of methods. This will help you think about what inputs you might need and what output you expect.
+
+    public class SavingsAccount {
+    
+    int balance;
+    
+    public SavingsAccount(int initialBalance){
+    balance = initialBalance;
+    }
+    
+    public void checkBalance(){
+    System.out.println("Hello!");
+    System.out.println("Your balance is "+balance);
+    }
+    
+    public void deposit(int amountToDeposit){
+    balance = amountToDeposit + balance;
+    System.out.println("You just deposited " + amountToDeposit);
+    }
+    
+    public int withdraw(int amountToWithdraw){
+    balance = balance - amountToWithdraw;
+    System.out.println("You just withdrew " + amountToWithdraw);
+    return amountToWithdraw;
+    }
+    
+    public String toString(){
+    return "This is a savings account with " + balance + " saved.";
+    }
+
+    public static void main(String[] args){
+    SavingsAccount savings = new SavingsAccount(2000);
+
+    //Check balance:
+    savings.checkBalance();
+    
+    //Withdrawing:
+    savings.withdraw(300);
+    
+    //Check balance:
+    savings.checkBalance();
+    
+    //Deposit:
+    savings.deposit(600);
+    
+    //Check balance:
+    savings.checkBalance();
+    
+    //Deposit:
+    savings.deposit(600);
+    
+    //Check balance:
+    savings.checkBalance();
+    
+    System.out.println(savings);
+    }       
+    }
+    
+conditionals
+
+## Review
+Before this lesson, our code executed from top to bottom, line by line.
+
+Conditional statements add branching paths to our programs. We use conditionals to make decisions in the program so that different inputs will produce different results.
+
+Conditionals have the general structure:
+
+    if (condition) {
+    // consequent path
+    } else {
+    // alternative path
+    }
+
+Specific conditional statements have the following behavior:
+
+    if-then:
+code block runs if condition is true
+
+    if-then-else:
+one block runs if conditions is true
+another block runs if condition is false
+
+    if-then-else chained:
+same as if-then but an arbitrary number of conditions
+
+    switch:
+switch block runs if condition value matches case value
+
+### Introduction to Conditional Operators
+![img_6.png](img_6.png)
+
+****
+## Review Conditional Operators
+Conditional operators work on boolean values to simplify our code. They’re often combined with conditional statements to consolidate the branching logic.
+
+Conditional-AND, &&, evaluates to true if the booleans on both sides are true.
+
+* Conditions placed in parentheses - ()
+* NOT - !
+* AND - &&
+* OR - ||
+
+
+    `if (true && false) {
+    System.out.println("You won't see me print!");
+    } else if (true && true) {
+    System.out.println("You will see me print!");
+    }`
+
+Conditional-OR, ||, evaluates to true if one or both of the booleans on either side is true.
+
+    `if (false || false) {
+    System.out.println("You won't see me print!");
+    } else if (false || true) {
+    System.out.println("You will see me print!");
+    }`
+
+Logical-NOT, !, evaluates to the opposite boolean value to which it is applied.
+
+    `if (!false) {
+    System.out.println("You will see me print!");
+    }`
+
+### Arrays
+    `int firstNumber = 4;
+    int secondNumber = 8;
+    int thirdNumber = 15;
+    int fourthNumber = 16;
+    int fifthNumber = 23;`
+![img_7.png](img_7.png)
+Notice that the indexes start at 0! The element at index 0 is 4, while the element at index 1 is 8. 
+This array has a length of 5, since it holds five elements, but the highest index of the array is 4.
+
+    String[] robotArticles = {"Oil News", "Innovative Motors", "Humans: Exterminate Or Not?", "Organic Eye Implants", "Path Finding in an Unknown World"};
+    int[] robotViewers = {87, 32, 13, 11, 7};
+    double[] robotRatings = {2.5, 3.2, 5.0, 1.7, 4.3};
+
+
+### Review
+We have now seen how to store a list of values in arrays. We can use this knowledge to make organized programs with more complex variables.
+
+Throughout the lesson, we have learned about:
+
+* Creating arrays explicitly, using 
+`{ and }`
+
+
+* Accessing an index of an array using `[ and ]`.
+
+
+* Creating empty arrays of a certain size, and filling the indices one by one.
+Getting the length of an array using length.
+
+
+* Using the argument array args that is passed into the` main()` method of a class.
+
+
+### Review of Arraylists
+Nice work! You now know the basics of ArrayLists including:
+
+* Creating an ArrayList.
+* Adding a new ArrayList item using add().
+* Accessing the size of an ArrayList using size().
+* Finding an item by index using get().
+* Changing the value of an ArrayList item using set().
+* Removing an item with a specific value using remove().
+* Retrieving the index of an item with a specific value using indexOf().
+
+Now if only there were some way to move through an array or ArrayList, item by item…
+
+
+### Review java loops
+
+Nice work! Let’s iterate over what you’ve just learned about loops:
+
+* while loops: These are useful to repeat a code block an unknown number of times until some condition is met. For example:
+    
+
+    int wishes = 0;
+    
+    while (wishes < 3) {
+    
+    // code that will run
+    wishes++;
+    
+    }
+
+
+* for loops: These are ideal for when you are incrementing or decrementing with a counter variable. For example:
+
+
+    for (int i = 0; i < 5; i++) {
+    
+    // code that will run
+    
+    }
+
+
+* For-each loops: These make it simple to do something with each item in a list. For example:
+
+
+    for (String inventoryItem : inventoryItems) {
+    
+    // do something with each inventoryItem
+    
+    }
 
 
 
