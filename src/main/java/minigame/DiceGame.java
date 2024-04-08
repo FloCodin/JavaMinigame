@@ -31,7 +31,6 @@ class DiceRoll {
 
 }
 
-
  class GameLogic {
     private Scanner scanner = new Scanner(System.in);
     private String[] playerNames;
