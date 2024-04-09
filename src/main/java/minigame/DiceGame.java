@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
 
+
 public class DiceGame {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -26,9 +27,12 @@ public class DiceGame {
 class Player {
     private String name;
     private int score;
+    private int rollCount; // Added to track the number of rolls
 
     public Player(String name) {
         this.name = name;
+        this.score = 0;
+        this.rollCount = 0; // Initialize roll count
     }
 
     public String getName() {
@@ -39,12 +43,21 @@ class Player {
         return score;
     }
 
+    public int getRollCount() { // Getter for rollCount
+        return rollCount;
+    }
+
     public void addToScore(int points) {
         score += points;
     }
 
+    public void incrementRollCount() { // Increment roll count
+        rollCount++;
+    }
+
     public void resetScore() {
         score = 0;
+        rollCount = 0; // Reset roll count when score is reset
     }
 }
 
@@ -66,6 +79,10 @@ class Game {
         this.gameOver = false;
         this.scanner = new Scanner(System.in);
     }
+    public void endGame() {
+        // Pass game results to database interaction code
+        DatabaseWriter.insertGameResults("de", 1,1);
+    }
 
     public void start() {
         while (!gameOver) {
@@ -73,12 +90,13 @@ class Game {
             System.out.println(currentPlayer.getName() + "'s turn to roll the dice. Press enter to roll...");
             scanner.nextLine();
             int diceRoll = Dice.roll();
+            currentPlayer.incrementRollCount();
             System.out.println(currentPlayer.getName() + " rolled a " + diceRoll + "!");
 
             if (diceRoll == 6) {
                 System.out.println("Oops! You rolled a 6. You lose!");
                 currentPlayer.resetScore();
-                // Spieler wechselt nach jedem Wurf, auch wenn eine 6 gewürfelt wurde
+
             } else {
                 currentPlayer.addToScore(diceRoll);
                 System.out.println("Your total score is: " + currentPlayer.getScore());
@@ -99,6 +117,7 @@ class Game {
         }
         if (gameOver) {
             calculateRankings();
+            endGame();
 
             System.out.println("Thanks for playing!");
         }
@@ -113,8 +132,11 @@ class Game {
         for (int i = 0; i < sortedPlayers.size(); i++) {
             Player player = sortedPlayers.get(i);
             int difference = Math.abs(40 - player.getScore());
+            System.out.println("After" + player.getRollCount() + " rounds the winner is:");
             System.out.println((i + 1) + ". " + player.getName() + " - Score: " + player.getScore() + ", Difference from 40: " + difference);
         }
 
     }
 }
+
+

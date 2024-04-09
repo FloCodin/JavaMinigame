@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="5215a973-9da9-4a15-9624-1cb116a04453" name="DDL Mapping">
+      <data-sources db="9cc4df31-895a-4dbb-ae1c-dbd8c168ec31" ddl="3de46de4-00e5-4bbe-8095-2862d264bc97" />
+    </mapping>
+  </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="3de46de4-00e5-4bbe-8095-2862d264bc97" />
+          <option name="name" value="identifier.sqlite (DDL)" />
+          <option name="dbmsName" value="SQLITE" />
+          <option name="parent" value="9cc4df31-895a-4dbb-ae1c-dbd8c168ec31" />
+          <option name="urls">
+            <array />
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
