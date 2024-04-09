@@ -1,4 +1,8 @@
 package minigame;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class DiceGame {
@@ -90,12 +94,27 @@ class Game {
                 if (choice.equalsIgnoreCase("n")) {
                     System.out.println(currentPlayer.getName() + " decided to keep the current score.");
                 }
-                // Wenn der Spieler entscheidet weiterzumachen und keine 6 gewürfelt hat, wird der Spieler am Ende des Zuges trotzdem gewechselt.
             }
-
-            // Aktualisiert den Index des aktuellen Spielers nach jedem Wurf
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         }
-        System.out.println("Thanks for playing!");
+        if (gameOver) {
+            calculateRankings();
+
+            System.out.println("Thanks for playing!");
+        }
+    }
+
+    public void calculateRankings() {
+        ArrayList<Player> sortedPlayers = new ArrayList<>(Arrays.asList(players));
+
+        sortedPlayers.sort(Comparator.comparingInt(p -> Math.abs(40 - p.getScore())));
+
+        System.out.println("\nRankings:");
+        for (int i = 0; i < sortedPlayers.size(); i++) {
+            Player player = sortedPlayers.get(i);
+            int difference = Math.abs(40 - player.getScore());
+            System.out.println((i + 1) + ". " + player.getName() + " - Score: " + player.getScore() + ", Difference from 40: " + difference);
+        }
+
     }
 }
