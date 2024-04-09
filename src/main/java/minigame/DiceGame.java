@@ -1,79 +1,101 @@
 package minigame;
-
 import java.util.Scanner;
 
 public class DiceGame {
     public static void main(String[] args) {
-        GameLogic gameLogic = new GameLogic();
-        gameLogic.startGame();
-    }
-}
-
-class PlayerRelated {
-    public static String[] getPlayerNames() {
         Scanner scanner = new Scanner(System.in);
-        String[] playerNames = new String[2];
+        System.out.print("Enter number of players: ");
+        int numOfPlayers = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        Player[] players = new Player[numOfPlayers];
+        for (int i = 0; i < numOfPlayers; i++) {
+            System.out.print("Enter name for Player " + (i + 1) + ": ");
+            String playerName = scanner.nextLine();
+            players[i] = new Player(playerName);
+        }
 
-        System.out.println("Enter player 1's name:");
-        playerNames[0] = scanner.nextLine();
-
-        System.out.println("Enter player 2's name:");
-        playerNames[1] = scanner.nextLine();
-        System.out.println("Welcome to the Dice Game, " + playerNames[0] + " and " + playerNames[1] + "!");
-        return playerNames;
+        Game game = new Game(players);
+        game.start();
     }
 }
 
-class DiceRoll {
-    public static int rollDice() {
+class Player {
+    private String name;
+    private int score;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addToScore(int points) {
+        score += points;
+    }
+
+    public void resetScore() {
+        score = 0;
+    }
+}
+
+class Dice {
+    public static int roll() {
         return (int) (Math.random() * 6) + 1;
     }
-
 }
 
- class GameLogic {
-    private Scanner scanner = new Scanner(System.in);
-    private String[] playerNames;
-    private int currentPlayerIndex = 0;
-    private int[] scores = new int[2];
-    private boolean gameOver = false;
+class Game {
+    private Player[] players;
+    private int currentPlayerIndex;
+    private boolean gameOver;
+    private Scanner scanner;
 
-    public GameLogic() {
-        playerNames = PlayerRelated.getPlayerNames(); // Assuming PlayerRelated is another class you've defined
+    public Game(Player[] players) {
+        this.players = players;
+        this.currentPlayerIndex = 0;
+        this.gameOver = false;
+        this.scanner = new Scanner(System.in);
     }
 
-    public void startGame() {
+    public void start() {
         while (!gameOver) {
-            System.out.println(playerNames[currentPlayerIndex] + "'s turn to roll the dice. Press enter to roll...");
+            Player currentPlayer = players[currentPlayerIndex];
+            System.out.println(currentPlayer.getName() + "'s turn to roll the dice. Press enter to roll...");
             scanner.nextLine();
-            int diceRoll = DiceRoll.rollDice(); // Assuming DiceRoll is another class you've defined
-            System.out.println(playerNames[currentPlayerIndex] + " rolled a " + diceRoll + "!");
+            int diceRoll = Dice.roll();
+            System.out.println(currentPlayer.getName() + " rolled a " + diceRoll + "!");
 
             if (diceRoll == 6) {
                 System.out.println("Oops! You rolled a 6. You lose!");
-                scores[currentPlayerIndex] = 0;
+                currentPlayer.resetScore();
+                // Spieler wechselt nach jedem Wurf, auch wenn eine 6 gewürfelt wurde
             } else {
-                scores[currentPlayerIndex] += diceRoll; // Add score
-                System.out.println("Your total score is: " + scores[currentPlayerIndex]);
+                currentPlayer.addToScore(diceRoll);
+                System.out.println("Your total score is: " + currentPlayer.getScore());
+
+                if (currentPlayer.getScore() >= 40) {
+                    System.out.println(currentPlayer.getName() + " wins with a score of " + currentPlayer.getScore() + "!");
+                    gameOver = true;
+                    break; // Beendet die Schleife, wenn ein Spieler gewinnt
+                }
+
                 System.out.println("Do you want to continue rolling? (y/n)");
                 String choice = scanner.nextLine();
                 if (choice.equalsIgnoreCase("n")) {
-                    System.out.println(playerNames[currentPlayerIndex] + " decided to keep the current score.");
-                    if (scores[currentPlayerIndex] >= 40) {
-                        System.out.println(playerNames[currentPlayerIndex] + " wins with a score of " + scores[currentPlayerIndex] + "!");
-                        gameOver = true;
-                    }
-                } else {
-                    if (scores[currentPlayerIndex] >= 40) {
-                        System.out.println(playerNames[currentPlayerIndex] + " wins with a score of " + scores[currentPlayerIndex] + "!");
-                        gameOver = true;
-                    }
+                    System.out.println(currentPlayer.getName() + " decided to keep the current score.");
                 }
+                // Wenn der Spieler entscheidet weiterzumachen und keine 6 gewürfelt hat, wird der Spieler am Ende des Zuges trotzdem gewechselt.
             }
 
-            currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+            // Aktualisiert den Index des aktuellen Spielers nach jedem Wurf
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         }
-
         System.out.println("Thanks for playing!");
     }
 }
