@@ -41,12 +41,12 @@ public class DiceGame {
 class Player {
     private String name;
     private int score;
-    private int rollCount; // Added to track the number of rolls
+    private int rollCount;
 
     public Player(String name) {
         this.name = name;
         this.score = 0;
-        this.rollCount = 0; // Initialize roll count
+        this.rollCount = 0;
     }
 
     public String getName() {
@@ -57,7 +57,7 @@ class Player {
         return score;
     }
 
-    public int getRollCount() { // Getter for rollCount
+    public int getRollCount() {
         return rollCount;
     }
 
@@ -65,13 +65,12 @@ class Player {
         score += points;
     }
 
-    public void incrementRollCount() { // Increment roll count
+    public void incrementRollCount() {
         rollCount++;
     }
 
     public void resetScore() {
         score = 0;
-        rollCount = 0; // Reset roll count when score is reset
     }
 }
 
@@ -115,7 +114,7 @@ class Game {
                 if (currentPlayer.getScore() >= 40) {
                     System.out.println(currentPlayer.getName() + " wins with a score of " + currentPlayer.getScore() + "!");
                     gameOver = true;
-                    break; // Beendet die Schleife, wenn ein Spieler gewinnt
+                    break;
                 }
 
                 System.out.println("Do you want to continue rolling? (y/n)");
@@ -143,20 +142,18 @@ class Game {
         for (int i = 0; i < sortedPlayers.size(); i++) {
             Player player = sortedPlayers.get(i);
             int difference = Math.abs(40 - player.getScore());
-            System.out.println("After" + player.getRollCount() + " rounds the winner is:");
+            System.out.println("After " + player.getRollCount() + " rounds the winner is:");
             System.out.println((i + 1) + ". " + player.getName() + " - Score: " + player.getScore() + ", Difference from 40: " + difference);
         }
 
     }
 
     public void endGame() {
-        // Assuming 'players' is accessible here and contains all player data.
         Player winner = null;
         for (Player player : players) {
-            // Assuming a winning score is 40 or more.
             if (player.getScore() >= 40) {
                 winner = player;
-                break; // Assuming single winner scenario.
+                break;
             }
         }
 
