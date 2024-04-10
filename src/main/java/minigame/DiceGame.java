@@ -10,19 +10,31 @@ public class DiceGame {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter number of players: ");
+        boolean playAgain;
 
-        int numOfPlayers = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        Player[] players = new Player[numOfPlayers];
-        for (int i = 0; i < numOfPlayers; i++) {
-            System.out.print("Enter name for Player " + (i + 1) + ": ");
-            String playerName = scanner.nextLine();
-            players[i] = new Player(playerName);
-        }
+        do {
+            System.out.print("Enter number of players: ");
+            int numOfPlayers = scanner.nextInt();
+            scanner.nextLine(); // Consume newline left-over
 
-        Game game = new Game(players);
-        game.start();
+            Player[] players = new Player[numOfPlayers];
+            for (int i = 0; i < numOfPlayers; i++) {
+                System.out.print("Enter name for Player " + (i + 1) + ": ");
+                String playerName = scanner.nextLine();
+                players[i] = new Player(playerName);
+            }
+
+            Game game = new Game(players);
+            game.start();
+
+            // Ask if the players want to play again
+            System.out.println("Would you like to play again? (y/n): ");
+            String input = scanner.nextLine().trim().toLowerCase();
+            playAgain = input.equals("y");
+
+        } while (playAgain);
+
+        System.out.println("Thanks for playing!");
     }
 }
 
