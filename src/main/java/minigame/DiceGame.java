@@ -7,9 +7,11 @@ import java.util.Scanner;
 
 
 public class DiceGame {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter number of players: ");
+
         int numOfPlayers = scanner.nextInt();
         scanner.nextLine(); // Consume newline
         Player[] players = new Player[numOfPlayers];
@@ -79,10 +81,7 @@ class Game {
         this.gameOver = false;
         this.scanner = new Scanner(System.in);
     }
-    public void endGame() {
-        // Pass game results to database interaction code
-        DatabaseWriter.insertGameResults("de", 1,1);
-    }
+
 
     public void start() {
         while (!gameOver) {
@@ -136,6 +135,25 @@ class Game {
             System.out.println((i + 1) + ". " + player.getName() + " - Score: " + player.getScore() + ", Difference from 40: " + difference);
         }
 
+    }
+
+    public void endGame() {
+        // Assuming 'players' is accessible here and contains all player data.
+        Player winner = null;
+        for (Player player : players) {
+            // Assuming a winning score is 40 or more.
+            if (player.getScore() >= 40) {
+                winner = player;
+                break; // Assuming single winner scenario.
+            }
+        }
+
+        if (winner != null) {
+            DatabaseWriter.insertGameResults(winner.getName(), winner.getScore(), winner.getRollCount());
+            System.out.println("Game result inserted successfully for player: " + winner.getName());
+        } else {
+            System.out.println("No winner found to insert into database.");
+        }
     }
 }
 

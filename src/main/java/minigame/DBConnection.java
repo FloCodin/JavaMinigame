@@ -10,11 +10,13 @@ public class DBConnection {
     public static Connection getConnection() {
         if (connection == null) {
             try {
-                // DB_URL is something like "jdbc:sqlite:path_to_your_db_file.db"
-                String DB_URL = "localhost:5432";
-                connection = DriverManager.getConnection(DB_URL);
+                // Example URL for PostgreSQL JDBC
+                String DB_URL = "jdbc:postgresql://localhost:5432/testdb";
+                // You must replace "user" and "pass" with your actual database credentials
+                String USER = "testuser";
+                String PASS = "example";
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
                 System.out.println("Connection to PostgreSQL has been established.");
-
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
